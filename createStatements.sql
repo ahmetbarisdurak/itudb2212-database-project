@@ -1,0 +1,2 @@
+INSERT INTO generalInfo (countryIndex, countryName, region, countryPopulation, capital, currency, exchangeRate ) VALUES (1, 'Armenia', 'Western Asia', 2968, 'Yerevan', 'AMD', 522.6)
+INSERT INTO generalInfo (countryIndex, countryName, region, countryPopulation, capital, currency, exchangeRate ) VALUES (2, 'Argentina', 'South America', 45606, 'Buenos Aires', 'ARS', 84)
