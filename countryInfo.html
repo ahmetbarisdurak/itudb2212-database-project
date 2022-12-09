@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Countries {% endblock %}</h1>
+    {% for country in countries %}
+        <div class='country'>
+            <p>{{ country['countryIndex'] }}</p>
+            <h2>{{ country['countryName'] }}</h2>
+            <p>{{ country['region'] }}</p>
+            <p>Edit</p>
+        </div>
+    {% endfor %}
+{% endblock %}
