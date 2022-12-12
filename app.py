@@ -17,10 +17,31 @@ def homePage():
 @app.route('/info')
 def countryInformation():
     conn = get_db_connection()
-    countries = conn.execute('SELECT * FROM generalInfo').fetchall()
+    countries = conn.execute('SELECT * \
+                            FROM generalInfo JOIN countryPopulations \
+                            ON generalInfo.countryIndex = countryPopulations.countryIndex \
+                                  ').fetchall()
     conn.close()
     return render_template('countryInfo.html', countries=countries)
 
+@app.route('/showInfo', methods=['GET', 'POST'])
+def showInfo():
+    inputData = list(request.form.values())
+    # Burada datayı rahat bir şekilde alabiliyorum.
+    conn = get_db_connection()
+    countries = conn.execute('SELECT * \
+                            FROM generalInfo JOIN countryPopulations \
+                            ON generalInfo.countryIndex = countryPopulations.countryIndex \
+                                  ').fetchall()
+    conn.close()
+
+    for country in countries:
+        if(inputData[0] == country['countryName']):
+            country1 = country
+
+    print(country1.keys())
+
+    return render_template('showInfo.html', country=country1)
 @app.route('/comparison')
 def countryComparator():
     conn = get_db_connection()
@@ -34,19 +55,20 @@ def compare():
     print(inputData[0] + " is input data 0")
     print(inputData[1] + " is input data 1")
     conn = get_db_connection()
-    countries = conn.execute('SELECT * FROM generalInfo').fetchall()
+    countries = conn.execute('SELECT * \
+                            FROM generalInfo JOIN countryPopulations \
+                            ON generalInfo.countryIndex = countryPopulations.countryIndex \
+                                  ').fetchall()
     conn.close()
 
     for country in countries:
         if(inputData[0] == country['countryName']):
-            country1= country
+            country1 = country
         elif(inputData[1] == country['countryName']):
             country2 = country
-        print(countries[0])
-        print(len(countries[0]))
-        print("length of the country")
-        print(len(countries))
-        print("length of the countries")
+
+    print(countries)
+
     return render_template('comparisonPage.html', country1=country1, country2=country2)
 
 @app.route('/exchange')

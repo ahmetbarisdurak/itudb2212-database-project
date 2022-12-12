@@ -10,9 +10,9 @@ CREATE TABLE generalInfo (
     exchangeRate FLOAT
 );
 
-DROP TABLE IF EXISTS population;
+DROP TABLE IF EXISTS countryPopulations;
 
-CREATE TABLE population (
+CREATE TABLE countryPopulations (
     countryIndex INTEGER,
     populationGrowth FLOAT,
     urbanPopulation FLOAT,
