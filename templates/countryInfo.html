@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Countries {% endblock %}</h1>
-    {% for country in countries %}
-        <div class='country'>
-            <p>{{ country['countryIndex'] }}</p>
-            <h2>{{ country['countryName'] }}</h2>
-            <p>{{ country['region'] }}</p>
-            <p>Edit</p>
-        </div>
-    {% endfor %}
+    <h1>{% block title %} COUNTRY INFO {% endblock %}</h1>
+
+    <div class='countries'>
+        <form action="{{url_for('showInfo')}}" method="post">
+            <select name="country 1" class="Input">
+                {% for country in countries %}
+                <option value="{{country['countryName']}}">{{ country['countryName'] }}</option>
+                {% endfor %}
+            </select><br><br>   
+            <button type="Submit" class="submit-btn"> Submit </button>
+        </form>
+    </div>
 {% endblock %}

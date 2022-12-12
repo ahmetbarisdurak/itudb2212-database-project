@@ -15,7 +15,7 @@ body {
   z-index: 1;
   top: 0;
   overflow-x: hidden;
-  padding-top: 20px;
+  padding-top: 500px;
 }
 
 .left {
@@ -35,36 +35,28 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-75%, -75%);
   text-align: center;
 }
 
 </style>
 </head>
-<body>
 
 {% block content %}
+<body>
 
-    <h1>{% block title %} Countries {% endblock %}</h1>
-    <div class="split left">
-        <div class="centered">
-            <h2>{{ country1['countryName'] }}</h2>
-            <p>{{ country1['region'] }}</p>
-        </div>
-    </div>
+    <h1>{% block title %} Country Information {% endblock %}</h1>
     <div class="split middle">
         <div class="centered">
-            <h2>Country Name</h2>
-            <p>Country Region</p>
+            {% for i in range( country.keys() | length ) %}
+            <div>
+                {% if country.keys()[i] != "countryIndex" %}
+                    <h2>{{country.keys()[i] }}:   {{ country[i] }} </h2>
+                {% endif %}
+            </div>
+            {% endfor %}
         </div>
     </div>
-    
-    <div class="split right">
-        <div class="centered">
-            <h2>{{ country2['countryName'] }}</h2>
-            <p>{{ country2['region'] }}</p>
-        </div>
-    </div>
-{% endblock %}
 </body>
 </html>
+{% endblock %}
