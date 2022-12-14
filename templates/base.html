@@ -1,44 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head class="header">
     <meta charset="UTF-8">
     <title>{% block title %} {% endblock %} - Countries</title>
-    <style>
-        .post {
-            padding: 10px;
-            margin: 5px;
-            background-color: #f3f3f3
-        }
-
-        nav a {
-            color: #d64161;
-            font-size: 3em;
-            margin-left: 50px;
-            text-decoration: none;
-        }
-
-        .alert {
-            padding: 20px;
-            margin: 5px;
-            color: #970020;
-            background-color: #ffd5de;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/base.css') }}" />
 </head>
 <body>
-    <nav>
-        <a href="{{ url_for('countryInformation') }}">Country Information</a>
-        <a href="{{ url_for('countryComparator') }}">Country Comparator</a>
-        <a href="{{ url_for('randomInfo') }}">Random Information</a>
-        <a href="{{ url_for('currencyExchange') }}">Currency Exchange</a>
-    </nav>
-    <hr>
-    <div class="content">
-        {% for message in get_flashed_messages() %}
-            <div class="alert">{{ message }}</div>
-        {% endfor %}
-
-        {% block content %} {% endblock %}
+    <header class="header">
+        
+	    <h1 class="logo"><a href="/">Country Manager</a></h1>
+        <ul class="main-nav">
+            <li><a href="{{ url_for('listCountries') }}">List Countries </a></li>
+            <li><a href="{{ url_for('countryInformation') }}">Country Information</a></li>
+            <li><a href="{{ url_for('countryComparator') }}">Country Comparator</a></li>
+            <li><a href="{{ url_for('randomInfo') }}">Random Information</a></li>
+            <li><a href="{{ url_for('currencyExchange') }}">Currency Exchange</a></li>
+        </ul>
+	</header> 
+    
+    {% block content %}
+    
+    <div class="bg-image"></div>
+    <div class="bg-text">
+        <h1>WELCOME TO COUNTRY INFORMATION SITE</h1>
     </div>
+    
+    
+    {% endblock %}
 </body>
 </html>

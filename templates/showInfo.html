@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" />
 <style>
 body {
   font-family: Arial;
@@ -48,13 +49,26 @@ body {
     <h1>{% block title %} Country Information {% endblock %}</h1>
     <div class="split middle">
         <div class="centered">
-            {% for i in range( country.keys() | length ) %}
+          <details>
+            <summary>General Info</summary>
+            {% for i in range( countryInfo.keys() | length ) %}
             <div>
-                {% if country.keys()[i] != "countryIndex" %}
-                    <h2>{{country.keys()[i] }}:   {{ country[i] }} </h2>
+                {% if countryInfo.keys()[i] != "countryIndex" %}
+                    <h2>{{countryInfo.keys()[i] }}:   {{ countryInfo[i] }} </h2>
                 {% endif %}
             </div>
             {% endfor %}
+          </details>
+          <details>
+            <summary>Population Info</summary>
+            {% for i in range( countryPopulations.keys() | length ) %}
+            <div>
+                {% if countryPopulations.keys()[i] != "countryIndex" %}
+                    <h2>{{countryPopulations.keys()[i] }}:   {{ countryPopulations[i] }} </h2>
+                {% endif %}
+            </div>
+            {% endfor %}
+          </details>
         </div>
     </div>
 </body>

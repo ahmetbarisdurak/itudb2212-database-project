@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
-
+<link rel="stylesheet" href="{{ url_for('static',filename='styles/base.css') }}" />
 {% block content %}
-    <h1>{% block title %} Countries {% endblock %}</h1>
+<body>
+    <h1>{% block title %} Random Information About A Country {% endblock %}</h1>
         <div class='country'>
             <p>{{ text }}</p>
         </div>
+</body>
 {% endblock %}
