@@ -1,54 +1,11 @@
 {% extends 'base.html' %}
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" />
-<style>
-body {
-  font-family: Arial;
-  color: black;
-}
-
-.split {
-  height: 100%;
-  width: 50%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  overflow-x: hidden;
-  padding-top: 500px;
-}
-
-.left {
-  left: 0;
-}
-
-.right {
-  right: 0;
-}
-
-.middle {
-    left: 250;
-    right: 250;
-}
-
-.centered {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-75%, -75%);
-  text-align: center;
-}
-
-</style>
-</head>
 
 {% block content %}
-<body>
-
-    <h1>{% block title %} Country Information {% endblock %}</h1>
-    <div class="split middle">
-        <div class="centered">
+  <h1 class="centered">{% block title %} Country Information {% endblock %}</h1>
+  <form action="{{url_for('editCountry', countryIndex=countryInfo['countryIndex'] )}}" method="post">
+    <div>
+        <div>
+          <img src="../static/images/{{ countryInfo['countryName'] }}.png" class="infoImage"><br><br>
           <details>
             <summary>General Info</summary>
             {% for i in range( countryInfo.keys() | length ) %}
@@ -58,6 +15,7 @@ body {
                 {% endif %}
             </div>
             {% endfor %}
+            <button type="Edit" class="edit-btn" value="editGeneralInfo" name="edit1"> Edit </button>
           </details>
           <details>
             <summary>Population Info</summary>
@@ -68,9 +26,9 @@ body {
                 {% endif %}
             </div>
             {% endfor %}
+            <button type="Edit" class="edit-btn" value="editPopulations" name="edit2"> Edit </button>
           </details>
         </div>
     </div>
-</body>
-</html>
+  </form>
 {% endblock %}

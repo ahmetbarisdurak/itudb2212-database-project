@@ -1,34 +1,28 @@
 {% extends 'base.html' %}
-<html>
-<head class="header">
-    <meta charset="UTF-8">
-    <title>{% block title %} {% endblock %} - Countries</title>
-    <link rel="stylesheet" />
-</head>
-<body>
 
 {% block content %}
 
-    <h1>{% block title %} Countries {% endblock %}</h1>
+    <h1 class="centered">{% block title %} Country Comparison {% endblock %}</h1>
     <div class="split left">
         <div class="centered">
-            <h2>{{ country1['countryName'] }}</h2>
-            <p>{{ country1['region'] }}</p>
-        </div>
-    </div>
-    <div class="split middle">
-        <div class="centered">
-            <h2>Country Name</h2>
-            <p>Country Region</p>
+            <img src="../static/images/{{ country1['countryName'] }}.png">
+            {% for i in range( country1.keys() | length ) %}
+                {% if country1.keys()[i] != "countryIndex" %}
+                    <h2>{{country1.keys()[i] }}:   {{ country1[i] }} </h2>           
+                {% endif %}
+            {% endfor %}
         </div>
     </div>
     
     <div class="split right">
         <div class="centered">
-            <h2>{{ country2['countryName'] }}</h2>
-            <p>{{ country2['region'] }}</p>
+            <img src="../static/images/{{ country2['countryName'] }}.png">
+            {% for i in range( country2.keys() | length ) %}
+                {% if country2.keys()[i] != "countryIndex" %}
+                    <h2>{{country2.keys()[i] }}:   {{ country2[i] }} </h2>           
+                {% endif %}
+            {% endfor %}
         </div>
     </div>
+
 {% endblock %}
-</body>
-</html>
