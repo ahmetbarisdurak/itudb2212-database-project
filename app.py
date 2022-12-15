@@ -41,11 +41,9 @@ def countryInformation():
 def showInfo():
     inputData = list(request.form.values())
     # Burada datayı rahat bir şekilde alabiliyorum.
+    
+    print(inputData)
     conn = get_db_connection()
-    #countries = conn.execute('SELECT * \
-                            #FROM generalInfo JOIN countryPopulations \
-                            #ON generalInfo.countryIndex = countryPopulations.countryIndex \
-                             #     ').fetchall()
     
     countryInfo = conn.execute('SELECT * FROM generalInfo').fetchall()
     countryPopulations = conn.execute('SELECT * FROM countryPopulations').fetchall()
@@ -60,7 +58,7 @@ def showInfo():
     for country in countryPopulations:
         if(countryIndex == country['countryIndex']):
             countryPopulations = country
-
+    
     return render_template('showInfo.html', countryInfo=countryInfo,
         countryPopulations=countryPopulations)
 
@@ -72,30 +70,13 @@ def listCountries():
     
     return render_template("listCountries.html", countries=countries) 
 
-@app.route('/<int:id>/edit/', methods=('GET', 'POST'))
-def edit(id):
-    country = getCountry(id)
+@app.route('/<countryIndex>/editCountry', methods=('GET', 'POST'))
+def editCountry(countryIndex):
+ 
+    print("yessir")
+    print(countryIndex)
 
-    if request.method == 'POST':
-        title = request.form['title']
-        content = request.form['content']
-
-        if not title:
-            flash('Title is required!')
-
-        elif not content:
-            flash('Content is required!')
-
-        else:
-            conn = get_db_connection()
-            conn.execute('UPDATE posts SET title = ?, content = ?'
-                         ' WHERE id = ?',
-                         (title, content, id))
-            conn.commit()
-            conn.close()
-            return redirect(url_for('index'))
-
-    return render_template('edit.html', post=post)
+    return render_template('editPage.html')
 
 @app.route('/comparison')
 def countryComparator():
@@ -107,13 +88,10 @@ def countryComparator():
 @app.route("/compare", methods=['GET', 'POST'])
 def compare():
     inputData = list(request.form.values())
-    print(inputData[0] + " is input data 0")
-    print(inputData[1] + " is input data 1")
+    tableSelection = request.form['tables']
+
     conn = get_db_connection()
-    countries = conn.execute('SELECT * \
-                            FROM generalInfo JOIN countryPopulations \
-                            ON generalInfo.countryIndex = countryPopulations.countryIndex \
-                                  ').fetchall()
+    countries = conn.execute("SELECT * FROM " + tableSelection).fetchall()
     conn.close()
 
     for country in countries:
@@ -121,8 +99,6 @@ def compare():
             country1 = country
         elif(inputData[1] == country['countryName']):
             country2 = country
-
-    print(countries)
 
     return render_template('comparisonPage.html', country1=country1, country2=country2)
 
@@ -169,8 +145,6 @@ def countryRanking():
 @app.route("/delete", methods=['GET', 'POST'])
 def delete():
     inputData = list(request.form.getlist('countryDeletion'))
-
-    print(inputData)
     
     willDelete = []
 
@@ -182,9 +156,6 @@ def delete():
         for country in countries:
             if(country['countryName'] == x):  
                 willDelete.append(country['countryIndex'])
-
-
-    print(willDelete)
 
     for i in willDelete:
         countries = conn.execute('DELETE FROM generalInfo WHERE countryIndex = ?', (i,))
