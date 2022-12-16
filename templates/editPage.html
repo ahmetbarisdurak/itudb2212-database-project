@@ -1,6 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1 class="centered">{% block title %} Edit Page {% endblock %}</h1>
-  
+<h1 class="centered">{% block title %} Editing {{countryEdit['countryName']}} {% endblock %}</h1>
+<form action="{{url_for('changeValues', tableName = tableName)}}" method="post">
+    
+    {% for i in range( countryEdit.keys() | length ) %}
+      <br>
+      {% if countryEdit.keys()[i] != "countryIndex" %}
+        <h3>{{ countryEdit.keys()[i]}}</h1>
+        <textarea name="countryFeatures"
+                  placeholder= {{countryEdit.keys()[i]}}
+                  rows="1"
+                  cols="15"
+                  >{{ countryEdit[i] }}</textarea>
+        <br>
+      {% endif %}
+    {% endfor %}
+    <br>
+    <button type="submit" class="button-5">Submit Changes</button>
+</form>
+
 {% endblock %}

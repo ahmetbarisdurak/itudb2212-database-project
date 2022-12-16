@@ -1,1 +1,25 @@
-<link rel="stylesheet" href="{{ url_for('static',filename='styles/base.css') }}" />
+{% extends 'base.html' %}
+
+{% block content %}
+<body>
+    <h1 class="centered">{% block title %} Currency Exchange {% endblock %}</h1>
+
+        <div class='country 1'>
+            <form action="{{url_for('calculateValue')}}" method="post">
+                <select name="country 1" class="Input">
+                    {% for country in countries %}
+                    <option value="{{country['countryName']}}">{{ country['countryName'] }}</option>
+                    {% endfor %}
+                </select>
+                <input type="number" name="currencyValue"/>
+                <br><br>
+                <select name="country 2" class="Input">
+                    {% for country in countries %}
+                    <option value="{{ country['countryName'] }}">{{ country['countryName'] }}</option>
+                    {% endfor %}
+                </select><br><br>
+                <button type="Exchange" class="button-5"> Exchange </button>
+            </form>
+        </div>
+</body>
+{% endblock %}
