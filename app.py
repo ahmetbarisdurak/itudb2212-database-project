@@ -10,15 +10,6 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
-def getCountry(tableName, countryIndex):
-    conn = get_db_connection()
-    country = conn.execute('SELECT * FROM ? WHERE id = ?',
-                        (tableName, countryIndex)).fetchone()
-    conn.close()
-    if country is None:
-        abort(404)
-    return country
-
 @app.route('/')
 def homePage():
     conn = get_db_connection()
@@ -42,7 +33,6 @@ def showInfo():
     inputData = list(request.form.values())
     # Burada datayı rahat bir şekilde alabiliyorum.
     
-    print(inputData)
     conn = get_db_connection()
     
     countryInfo = conn.execute('SELECT * FROM generalInfo').fetchall()
@@ -72,12 +62,53 @@ def listCountries():
 
 @app.route('/<countryIndex>/editCountry', methods=('GET', 'POST'))
 def editCountry(countryIndex):
- 
-    print("yessir")
-    print(countryIndex)
+    
+    tableName = request.form["edit"]
 
-    return render_template('editPage.html')
+    conn = get_db_connection()
+    
+    countryInfo = conn.execute('SELECT * FROM ' + tableName).fetchall()
 
+    conn.close()
+
+    for country in countryInfo:
+        if(int(countryIndex) == country['countryIndex']):
+            countryEdit = country
+
+
+    return render_template('editPage.html', countryEdit=countryEdit, tableName=tableName)
+
+@app.route('/<tableName>/changeValues', methods=('GET', 'POST'))
+def changeValues(tableName):
+    
+    print(tableName)
+
+    values = request.form.getlist('countryFeatures')
+    
+    print(values)
+
+    for value in values:
+        print("-->" + value + "<--")
+
+    conn = get_db_connection()
+    if(tableName == 'generalInfo'):
+        conn.execute('UPDATE generalInfo SET countryName="' + values[0] 
+        + '", region="' + values[1] 
+        + '", countryPopulation=' + values[2] 
+        + ', capital="' + values[3] 
+        + '", currency="' + values[4] 
+        + '", exchangeRate=' + values[5]) 
+    elif(tableName == 'countryPopulations'):
+        conn.execute('UPDATE countryPopulations SET populationGrowth=' + values[0] 
+        + ', urbanPopulation=' + values[1] 
+        + ', fertility=' + values[2] 
+        + ', femaleLifeExpectancy=' + values[3] 
+        + ', maleLifeExpentancy=' + values[4] 
+        + ', refugeesOthers=' + values[5])
+    conn.commit()
+    conn.close()
+    
+    return redirect(url_for('countryInformation'))
 @app.route('/comparison')
 def countryComparator():
     conn = get_db_connection()
@@ -89,6 +120,10 @@ def countryComparator():
 def compare():
     inputData = list(request.form.values())
     tableSelection = request.form['tables']
+
+    if(inputData[0] == inputData[1]):
+        print('Countries can''t be same')
+        return redirect(url_for('countryComparator'))
 
     conn = get_db_connection()
     countries = conn.execute("SELECT * FROM " + tableSelection).fetchall()
@@ -104,7 +139,38 @@ def compare():
 
 @app.route('/exchange')
 def currencyExchange():
-    print("Currency Exchange")
+    conn = get_db_connection()
+    countries = conn.execute('SELECT * FROM generalInfo').fetchall()
+    conn.close()
+    return render_template('currencyExchange.html', countries=countries)
+
+@app.route('/calculateValue', methods=['GET', 'POST'])
+def calculateValue():
+
+    inputData = list(request.form.values())
+
+    conn = get_db_connection()
+    countries = conn.execute('SELECT * FROM generalInfo').fetchall()
+    conn.close()
+
+    if(inputData[0] == inputData[2]):
+        print('Countries can''t be same')
+        return redirect(url_for('currencyExchange'))
+
+
+    for country in countries:
+        if(inputData[0] == country['countryName']):
+            exchangeRate1 = country['exchangeRate']
+            country1 = country
+        elif(inputData[2] == country['countryName']):
+            exchangeRate2 = country['exchangeRate']
+            country2 = country
+
+    value = exchangeRate1 * float(inputData[1])
+    value = value / exchangeRate2
+
+    
+    return render_template('calculatedValue.html',country1=country1, country2=country2, value=value)
 
 @app.route('/randomInfo')
 def randomInfo():
