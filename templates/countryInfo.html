@@ -2,17 +2,21 @@
 
 {% block content %}
 <body>
-    <h1>{% block title %} COUNTRY INFO {% endblock %}</h1>
-
-    <div class='countries'>
-        <form action="{{url_for('showInfo')}}" method="post">
-            <select name="country 1" class="Input">
+    <h1 class="header-text">{% block title %} COUNTRY INFO {% endblock %}</h1>
+    <br><br><br><br><br><br><br>
+    <form action="{{url_for('showInfo')}}" method="post">
+        <div class='select'>
+            <select id='standart-select' name="country 1" class="Input">
                 {% for country in countries %}
                 <option value="{{country['countryName']}}">{{ country['countryName'] }}</option>
                 {% endfor %}
-            </select><br><br>   
-            <button type="Submit" class="button-5"> Submit </button>
-        </form>
-    </div>
+            </select>
+            <span class="focus"></span>
+        </div>
+        <br>
+        <div class="divCenter">
+        <button type="Submit" class="button-5 centered"> Submit </button>
+        </div>
+    </form>
 </body>
 {% endblock %}

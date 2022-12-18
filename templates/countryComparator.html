@@ -2,24 +2,30 @@
 
 {% block content %}
 <body>
-    <h1 class="centered">{% block title %} Country Comparison {% endblock %}</h1>
-
-        <div class='country 1'>
-            <form action="{{url_for('compare')}}" method="post">
-                <select name="country 1" class="Input">
-                    {% for country in countries %}
-                    <option value="{{country['countryName']}}">{{ country['countryName'] }}</option>
-                    {% endfor %}
-                </select><br><br>
-                <select name="country 2" class="Input">
-                    {% for country in countries %}
-                    <option value="{{ country['countryName'] }}">{{ country['countryName'] }}</option>
-                    {% endfor %}
-                </select><br><br>
-                <input type="radio" name="tables" id="tables1" value="generalInfo"> General Info<br><br>
-                <input type="radio" name="tables" id="tables1" value="countryPopulations"> Population <br><br>    
-                <button type="Compare" class="button-5"> Compare </button>
-            </form>
+    <h1 class="header-text">{% block title %} Country Comparison {% endblock %}</h1>
+    <br><br><br><br><br><br><br>
+    <form action="{{url_for('compare')}}" method="post">
+        <div class='select'>
+            <select id ="standart-select" name="country 1" class="Input">
+                {% for country in countries %}
+                <option value="{{country['countryName']}}">{{ country['countryName'] }}</option>
+                {% endfor %}
+            </select>
         </div>
+        <br>
+        <div class='select'>
+            <select id ="standart-select"  name="country 2" class="Input">
+                {% for country in countries %}
+                <option value="{{ country['countryName'] }}">{{ country['countryName'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <br><br>
+        <div class="divCenter">
+            <input type="radio" name="tables" id="tables1" value="generalInfo"> General Info<br><br>
+            <input type="radio" name="tables" id="tables1" value="countryPopulations"> Population <br><br>    
+            <button type="Compare" class="button-5"> Compare </button>
+        </div>
+    </form>
 </body>
 {% endblock %}

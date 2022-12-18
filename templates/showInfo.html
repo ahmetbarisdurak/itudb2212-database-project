@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1 class="centered">{% block title %} Country Information {% endblock %}</h1>
+  <h1 class="header-text">{% block title %} Country Information {% endblock %}</h1>
+  <br><br><br><br><br><br><br>
   <form action="{{url_for('editCountry', countryIndex=countryInfo['countryIndex'] )}}" method="post">
-    <div>
-        <div>
+    <div >
+        <div >
           <img src="../static/images/{{ countryInfo['countryName'] }}.png" class="infoImage"><br><br>
           <details>
             <summary>General Info</summary>

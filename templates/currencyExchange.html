@@ -2,24 +2,31 @@
 
 {% block content %}
 <body>
-    <h1 class="centered">{% block title %} Currency Exchange {% endblock %}</h1>
-
-        <div class='country 1'>
-            <form action="{{url_for('calculateValue')}}" method="post">
-                <select name="country 1" class="Input">
+    <h1 class="header-text">{% block title %} Currency Exchange {% endblock %}</h1>
+        <br><br><br><br><br><br><br>
+        <form action="{{url_for('calculateValue')}}" method="post">
+            <div class='select'>
+                <select id ="standart-select"  name="country 1" class="Input">
                     {% for country in countries %}
                     <option value="{{country['countryName']}}">{{ country['countryName'] }}</option>
                     {% endfor %}
                 </select>
-                <input type="number" name="currencyValue"/>
-                <br><br>
-                <select name="country 2" class="Input">
+            </div>
+            <br><br>
+            <input class="centeredInput" type="number" name="currencyValue"/>
+            <br><br>
+            <div class='select'>
+                <select id ="standart-select"  name="country 2" class="Input">
                     {% for country in countries %}
                     <option value="{{ country['countryName'] }}">{{ country['countryName'] }}</option>
                     {% endfor %}
-                </select><br><br>
+                </select>
+            </div>
+            <br><br>
+            <div class="divCenter">
                 <button type="Exchange" class="button-5"> Exchange </button>
-            </form>
-        </div>
+            </div>
+        </form>
+        
 </body>
 {% endblock %}

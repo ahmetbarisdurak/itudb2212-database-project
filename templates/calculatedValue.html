@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1 class="centered">{% block title %} Calculated Value {% endblock %}</h1>
-    <div>
-        <p class="centered">{{country1['countryName']}} 's {{country1['currency']}} to {{ country2['countryName'] }} 's
-            {{country2['currency']}} is {{value}} 
-        </p>
+    <div>    
+    <h1 class="header-text">{% block title %} Calculated Value {% endblock %}</h1>
+    <br><br><br><br><br><br><br><br>
+        <h1 class="centered">{{country1['countryName']}} 's {{country1['currency']}} to {{ country2['countryName'] }} 's
+            {{country2['currency']}} is {{value}} dolar's 
+        </h1>
     </div
 
 {% endblock %}

@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 <body>
-    <h1>{% block title %} Country List {% endblock %}</h1>
-
-    <div class='countries'>
+    <h1 class="header-text">{% block title %} Country List {% endblock %}</h1>
+    <br><br><br><br><br><br><br>
+    <div class="divCenter">
         <form action="{{url_for('delete')}}" method="post">
             {% for country in countries %}
                 <input type="checkbox" id="country" name="countryDeletion" value= {{ country['countryName'] }}>

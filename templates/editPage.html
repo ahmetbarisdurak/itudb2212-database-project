@@ -6,15 +6,22 @@
     
     {% for i in range( countryEdit.keys() | length ) %}
       <br>
-      {% if countryEdit.keys()[i] != "countryIndex" %}
-        <h3>{{ countryEdit.keys()[i]}}</h1>
+      {% if countryEdit.keys()[i] != "countryIndex" and countryEdit.keys()[i] != "worldOrder" %}
+        <h3>{{ countryEdit.keys()[i]}}</h3>
         <textarea name="countryFeatures"
                   placeholder= {{countryEdit.keys()[i]}}
                   rows="1"
                   cols="15"
                   >{{ countryEdit[i] }}</textarea>
         <br>
-      {% endif %}
+      {%else%}
+        <h3>{{ countryEdit.keys()[i]}}</h3>
+        <textarea name="countryFeatures"
+        placeholder= {{countryEdit.keys()[i]}}
+        rows="1"
+        cols="15"
+        readonly>{{ countryEdit[i] }}</textarea>
+      {%endif%}
     {% endfor %}
     <br>
     <button type="submit" class="button-5">Submit Changes</button>
