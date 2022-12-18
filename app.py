@@ -92,19 +92,21 @@ def changeValues(tableName):
 
     conn = get_db_connection()
     if(tableName == 'generalInfo'):
-        conn.execute('UPDATE generalInfo SET countryName="' + values[0] 
-        + '", region="' + values[1] 
-        + '", countryPopulation=' + values[2] 
-        + ', capital="' + values[3] 
-        + '", currency="' + values[4] 
-        + '", exchangeRate=' + values[5]) 
+        conn.execute('UPDATE generalInfo SET countryName="' + values[1] 
+        + '", region="' + values[2] 
+        + '", countryPopulation=' + values[3] 
+        + ', capital="' + values[4] 
+        + '", currency="' + values[5] 
+        + '", exchangeRate=' + values[6]
+        + ' WHERE countryIndex = ' + values[0]) 
     elif(tableName == 'countryPopulations'):
-        conn.execute('UPDATE countryPopulations SET populationGrowth=' + values[0] 
-        + ', urbanPopulation=' + values[1] 
-        + ', fertility=' + values[2] 
-        + ', femaleLifeExpectancy=' + values[3] 
-        + ', maleLifeExpentancy=' + values[4] 
-        + ', refugeesOthers=' + values[5])
+        conn.execute('UPDATE countryPopulations SET populationGrowth=' + values[1] 
+        + ', urbanPopulation=' + values[2] 
+        + ', fertility=' + values[3] 
+        + ', femaleLifeExpectancy=' + values[4] 
+        + ', maleLifeExpentancy=' + values[5] 
+        + ', refugeesOthers=' + values[6]
+        + ' WHERE countryIndex = ' + values[0]) 
     conn.commit()
     conn.close()
     
@@ -121,6 +123,8 @@ def compare():
     inputData = list(request.form.values())
     tableSelection = request.form['tables']
 
+    print(inputData)
+
     if(inputData[0] == inputData[1]):
         print('Countries can''t be same')
         return redirect(url_for('countryComparator'))
@@ -131,9 +135,11 @@ def compare():
 
     for country in countries:
         if(inputData[0] == country['countryName']):
+            print(inputData[0] + " has been found")
             country1 = country
         elif(inputData[1] == country['countryName']):
             country2 = country
+            print(inputData[1] + " has been found")
 
     return render_template('comparisonPage.html', country1=country1, country2=country2)
 
