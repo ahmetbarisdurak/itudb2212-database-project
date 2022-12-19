@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="centered">{% block title %} Adding Country {% endblock %}</h1>
+<form action="{{url_for('addCountry', tableName = tableName)}}" method="post">
+    
+    {% for i in range( countryAdd.keys() | length ) %}
+      <br>
+      {% if countryAdd.keys()[i] != "countryIndex"  %}
+        <h3>{{ countryAdd.keys()[i]}}</h3>
+        <textarea name="countryFeatures"
+                  placeholder= {{countryAdd.keys()[i]}}
+                  rows="1"
+                  cols="15"
+                  ></textarea>
+        <br>
+      {%endif%}
+    {% endfor %}
+    <br>
+    <button type="submit" class="button-5">Add Country</button>
+</form>
+
+{% endblock %}

@@ -3,13 +3,16 @@
 <body>
     <h1 class="header-text">{% block title %} Country List {% endblock %}</h1>
     <br><br><br><br><br><br><br>
-    <div class="divCenter">
-        <form action="{{url_for('delete')}}" method="post">
+    <form action="{{url_for('delete')}}" method="post">
+        <div class="divCenter">
             {% for country in countries %}
                 <input type="checkbox" id="country" name="countryDeletion" value= {{ country['countryName'] }}>
                 <label for="country">{{ country['countryName'] }}</label><br></br>
             {% endfor %}
-            <button type="Submit" class="button-5"> Delete </button>
+                <button type="Submit" class="button-5"> Delete </button>
+    </form>
+        <form action="{{url_for('addProperties')}}" method="post">
+            <button type="Submit" class="button-5"> Add </button>
         </form>
     </div>
 </body>
