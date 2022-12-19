@@ -210,12 +210,77 @@ def randomInfo():
 
     return render_template('randomInfo.html', text=text)
 
-@app.route('/ranking')
-def countryRanking():
-    print("country ranking")
+
+@app.route("/add", methods=['GET', 'POST'])
+def addProperties():
+    
+    conn = get_db_connection()
+    countries = conn.execute('SELECT * \
+                            FROM generalInfo JOIN countryPopulations \
+                            ON generalInfo.countryIndex = countryPopulations.countryIndex \
+                                 ').fetchall()
+
+    conn.close()
+
+    for country in countries:
+        country1=country
+    
+    return render_template('addProperties.html', countryAdd=country1)
+
+@app.route("/addCountry", methods=['GET', 'POST'])
+def addCountry():
+    values = list(request.form.getlist('countryFeatures'))
+    
+    print(values)
+
+    conn = get_db_connection()
+
+    countries = conn.execute('SELECT * FROM populationTable').fetchall()
+    conn.commit()
+
+    for country in countries:
+        if(values[12] == country['worldOrder']):
+            return redirect(url_for('listCountries'))
+
+
+    conn.execute('INSERT INTO generalInfo (countryName, region, countryPopulation, capital, currency, exchangeRate )'
+    ' VALUES ("' + values[0] 
+    + '" , "' + values[1]
+    + '", ' + values[2]
+    + ', "' + values[3]
+    + '", "' + values[4]
+    + '", ' + values[5] + ")")
+    
+    conn.commit()
+
+    countries = conn.execute('SELECT * FROM generalInfo').fetchall()
+    conn.commit()
+
+    for country in countries:
+        if(values[0] == country['countryName']):
+            countryIndex = country['countryIndex']
+
+    conn.execute('INSERT INTO countryPopulations VALUES ('
+    + str(countryIndex)
+    + ', ' + values[6] 
+    + ', ' + values[7] 
+    + ', ' + values[8] 
+    + ', ' + values[9] 
+    + ', '+ values[10] 
+    + ', ' + values[11] 
+    + ', ' + values[12] + ")")
+
+    conn.commit()
+    conn.close()
+    
+    return redirect(url_for('listCountries'))
+
 
 @app.route("/delete", methods=['GET', 'POST'])
 def delete():
+    
+    print("nameee")
+
     inputData = list(request.form.getlist('countryDeletion'))
     
     willDelete = []
